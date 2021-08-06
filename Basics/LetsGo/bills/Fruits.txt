@@ -1,0 +1,4 @@
+<<What you ate>>
+orange:                   ... W 200 
+apple:                    ... W 100 
+total:                    ... W 300

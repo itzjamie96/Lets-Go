@@ -1,6 +1,6 @@
 package Programmers
 
-func solution(a int, b int) int64 {
+func sumOfTwoIntegers(a int, b int) int64 {
 
 	// a가 b보다 큰 경우에만 두 값들은 swap
 	if a > b {

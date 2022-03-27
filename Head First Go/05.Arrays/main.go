@@ -5,27 +5,45 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strconv"
 )
 
 func main() {
-	// open the data file for reading
-	file, err := os.Open("data.txt")
+
+	numbers, err := GetFloats("data.txt")
 	if err != nil {
 		log.Fatal(err)
 	}
-	// create scanner
-	scanner := bufio.NewScanner(file)
-	// loop until the end of the file is reached
-	for scanner.Scan() {
-		fmt.Println(scanner.Text())
+	fmt.Println(numbers)
+}
+
+// GetFloats reads a float64 from each line of a file.
+// GetFloats will return an array of numbers and any error encountered.
+func GetFloats(filename string) ([3]float64, error) {
+
+	// returning array
+	var numbers [3]float64
+
+	// open the data file for reading
+	file, err := os.Open(filename)
+	if err != nil {
+		return numbers, err
 	}
-	// close the file to free resources
+	i := 0
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
+		numbers[i], err = strconv.ParseFloat(scanner.Text(), 64)
+		if err != nil {
+			return numbers, err
+		}
+		i++
+	}
 	err = file.Close()
 	if err != nil {
-		log.Fatal(err)
+		return numbers, err
 	}
-	// report error if error was found while scanning
 	if scanner.Err() != nil {
-		log.Fatal(scanner.Err())
+		return numbers, scanner.Err()
 	}
+	return numbers, nil
 }
